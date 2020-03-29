@@ -1,6 +1,9 @@
+import controlActions from './ControlActions'
+import currentHeapActions from './CurrentHeapAction'
+
 const actions = {
-  START: 'START',
-  STOP: 'STOP'
+  ...controlActions,
+  ...currentHeapActions
 }
 
 export default actions

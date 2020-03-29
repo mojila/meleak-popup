@@ -13,6 +13,12 @@ const Reducer = (state = stores, action) => {
         ...state,
         active: false
       }
+    case actions.UPDATE_HEAP:
+      return {
+        ...state,
+        usedHeap: action.payload.usedHeap,
+        totalHeap: action.payload.totalHeap
+      }
     default:
       return state
   }

@@ -1,6 +1,6 @@
 /*eslint-disable no-undef*/
 import React, { useEffect, useContext } from 'react'
-import { Paper, Button, makeStyles, Box } from '@material-ui/core'
+import { Paper, Button, makeStyles, Box, Typography, Grid } from '@material-ui/core'
 import Context from '../context'
 import actions from '../actions'
 
@@ -45,19 +45,30 @@ const ActionControl = () => {
 
   useEffect(() => {
     if (process.env.NODE_ENV === 'production') {
+      // eslint-disable-next-line
       checkActivation()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <Paper className={classes.paper}>
-      <Box display="flex" justifyContent="flex-end">
-        {
-          store.active
-            ? <Button size="small" variant="outlined" onClick={stop}>Stop</Button>
-            : <Button size="small" variant="outlined" onClick={start}>Start</Button>
-        }
-      </Box>
+      <Grid container>
+        <Grid item xs={6}>
+          <Typography variant="h6" color="textSecondary">
+            Meleak
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Box display="flex" justifyContent="flex-end">
+            {
+              store.active
+                ? <Button size="small" variant="outlined" onClick={stop}>Stop</Button>
+                : <Button size="small" variant="outlined" onClick={start}>Start</Button>
+            }
+          </Box>
+        </Grid>
+      </Grid>
     </Paper>
   )
 }

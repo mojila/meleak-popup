@@ -1,7 +1,9 @@
-import ControlStore from './ControlStore'
+import controlStore from './ControlStore'
+import currentHeap from './CurrentHeapStore'
 
 const stores = {
-  ...ControlStore
+  ...controlStore,
+  ...currentHeap
 }
 
 export default stores
