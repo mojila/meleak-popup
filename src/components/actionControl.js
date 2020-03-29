@@ -1,6 +1,8 @@
 /*eslint-disable no-undef*/
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { Paper, Button, makeStyles, Box } from '@material-ui/core'
+import Context from '../context'
+import actions from '../actions'
 
 const useStyles = makeStyles((_theme) => ({
   paper: {
@@ -9,18 +11,18 @@ const useStyles = makeStyles((_theme) => ({
 }))
 
 const ActionControl = () => {
-  const [active, setActive] = useState(false)
+  const { store, dispatch } = useContext(Context)
 
   const classes = useStyles()
 
   const attachDebugger = async (tabs) => {
     await chrome.runtime.sendMessage({ action: 'attach_debugger', payload: { tabId: tabs[0].id } })
-    setActive(true)
+    dispatch({ type: actions.START })
   }
 
   const detachDebugger = async (tabs) => {
     await chrome.runtime.sendMessage({ action: 'detach_debugger', payload: { tabId: tabs[0].id } })
-    setActive(false)
+    dispatch({ type: actions.STOP })
   }
 
   const stop = async () => {
@@ -33,7 +35,11 @@ const ActionControl = () => {
 
   const checkActivation = async () => {
     chrome.runtime.sendMessage({ action: 'is_attached_debugger' }, (msg) => {
-      setActive(msg)
+      if (msg) {
+        dispatch({ type: actions.START })
+      } else {
+        dispatch({ type: actions.STOP })
+      }
     })
   }
 
@@ -47,7 +53,7 @@ const ActionControl = () => {
     <Paper className={classes.paper}>
       <Box display="flex" justifyContent="flex-end">
         {
-          active
+          store.active
             ? <Button size="small" variant="outlined" onClick={stop}>Stop</Button>
             : <Button size="small" variant="outlined" onClick={start}>Start</Button>
         }

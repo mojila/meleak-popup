@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'typeface-roboto';
 import './index.css'
+import { Provider, Reducers, Stores } from './context';
+
+const Index = () => {
+  const [store, dispatch] = useReducer(Reducers, Stores)
+
+  return (
+    <Provider value={{ store, dispatch }}>
+      <App />
+    </Provider>
+  )
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Index />,
   document.getElementById('root')
 );
 
