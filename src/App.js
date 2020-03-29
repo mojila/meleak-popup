@@ -6,6 +6,7 @@ import CurrentHeapUsed from './components/currentHeapUsed';
 import CurrentHeapTotal from './components/currentHeapTotal';
 import Context from './context';
 import actions from './actions';
+import Chart from './components/chart';
 
 function App() {
   const { dispatch } = useContext(Context)
@@ -14,8 +15,8 @@ function App() {
     if (process.env.NODE_ENV === 'production') {
       chrome.runtime.onMessage.addListener(({ action, payload }, _sender, _sendResponse) => {
         if (action === 'update_heap') {
-          let { usedHeap, totalHeap } = payload
-          dispatch({ type: actions.UPDATE_HEAP, payload: { usedHeap, totalHeap } })
+          let { usedHeap, totalHeap, heapData } = payload
+          dispatch({ type: actions.UPDATE_HEAP, payload: { usedHeap, totalHeap, heapData } })
         }
       })
     }
@@ -32,6 +33,9 @@ function App() {
       </Grid>
       <Grid item xs={6}>
         <CurrentHeapTotal />
+      </Grid>
+      <Grid item xs={12}>
+        <Chart />
       </Grid>
     </Grid>
   );  

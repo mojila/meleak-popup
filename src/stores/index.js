@@ -1,9 +1,11 @@
-import controlStore from './ControlStore'
+import control from './ControlStore'
 import currentHeap from './CurrentHeapStore'
+import chart from './ChartStore'
 
 const stores = {
-  ...controlStore,
-  ...currentHeap
+  ...control,
+  ...currentHeap,
+  ...chart
 }
 
 export default stores

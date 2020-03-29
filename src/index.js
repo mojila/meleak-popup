@@ -4,6 +4,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'typeface-roboto';
 import './index.css'
+import 'react-vis/dist/style.css'
 import { Provider, Reducers, Stores } from './context';
 
 const Index = () => {

@@ -17,7 +17,8 @@ const Reducer = (state = stores, action) => {
       return {
         ...state,
         usedHeap: action.payload.usedHeap,
-        totalHeap: action.payload.totalHeap
+        totalHeap: action.payload.totalHeap,
+        heapData: action.payload.heapData
       }
     default:
       return state
