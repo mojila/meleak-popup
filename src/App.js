@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+/*eslint-disable no-undef*/
+import React, { useEffect } from 'react';
+import { Button } from '@material-ui/core'
 
 function App() {
+  const attachDebugger = async (tabs) => {
+    chrome.runtime.sendMessage({ action: 'attach_debugger', payload: { tabId: tabs[0].id } })
+  }
+
+  const detachDebugger = async (tabs) => {
+    chrome.runtime.sendMessage({ action: 'detach_debugger', payload: { tabId: tabs[0].id } })
+  }
+
+  const stop = async () => {
+    await chrome.tabs.query({ active: true }, detachDebugger)
+  }
+
+  const start = async () => {
+    await chrome.tabs.query({ active: true }, attachDebugger)
+  }
+
+  useEffect(() => {
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div>adaw bray</div>
+      <div>
+        <Button variant="outlined" onClick={start}>Start</Button>
+        <Button variant="outlined" onClick={stop}>Stop</Button>
+      </div>
     </div>
-  );
+  );  
 }
 
 export default App;
+/*eslint-enable no-undef*/
