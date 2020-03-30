@@ -1,10 +1,5 @@
 const chart = {
-  heapData: [
-    {
-      x: 0,
-      y: 0
-    }
-  ]
+  heapData: []
 }
 
 export default chart

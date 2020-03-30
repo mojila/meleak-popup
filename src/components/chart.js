@@ -1,33 +1,51 @@
 import React, { useContext } from 'react'
-import {XYPlot, AreaSeries, LineSeries, HorizontalGridLines, XAxis, YAxis} from 'react-vis'
 import Context from '../context'
+import ApexChart from 'react-apexcharts'
 
 const Chart = () => {
   const { store } = useContext(Context)
 
+  const optionsMixedChart = {
+    chart: {
+      id: "basic-bar",
+      toolbar: {
+        show: false
+      }
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: "50%",
+        endingShape: "arrow"
+      }
+    },
+    stroke: {
+      width: [4, 0, 0]
+    },
+    markers: {
+      size: 6,
+      strokeWidth: 3,
+      fillOpacity: 0,
+      strokeOpacity: 0,
+      hover: {
+        size: 8
+      }
+    }
+  }
+
   return (
-    <XYPlot
-      height={200}
+    <ApexChart 
+      type="line" 
+      options={optionsMixedChart}
+      series={[
+        {
+          name: "Total Heap",
+          type: "line",
+          data: store.heapData
+        },
+      ]}
       width={400}
     >
-      <HorizontalGridLines />
-      <AreaSeries
-        data={store.heapData}
-        opacity={0.25}
-        stroke="transparent"
-        style={{}}
-      />
-      <LineSeries
-        curve={null}
-        data={store.heapData}
-        opacity={1}
-        stroke="#12939a"
-        strokeStyle="solid"
-        style={{}}
-      />
-      <XAxis />
-      <YAxis />
-    </XYPlot>
+    </ApexChart>
   )
 }
 
