@@ -43,7 +43,7 @@ const Chart = () => {
           data: store.heapData
         },
       ]}
-      width={400}
+      width={500}
     >
     </ApexChart>
   )
