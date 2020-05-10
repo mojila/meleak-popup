@@ -5,7 +5,7 @@ import ApexChart from 'react-apexcharts'
 const Chart = () => {
   const { store } = useContext(Context)
 
-  const optionsMixedChart = {
+  const generateOptionsMixedChart = () => ({
     chart: {
       id: "basic-bar",
       toolbar: {
@@ -19,7 +19,7 @@ const Chart = () => {
       }
     },
     stroke: {
-      width: [4, 0, 0]
+      width: [2, 0, 0]
     },
     markers: {
       size: 6,
@@ -30,20 +30,21 @@ const Chart = () => {
         size: 8
       }
     }
-  }
+  })
 
   return (
     <ApexChart 
       type="line" 
-      options={optionsMixedChart}
+      options={generateOptionsMixedChart()}
       series={[
         {
-          name: "Total Heap",
+          name: "Used Heap",
           type: "line",
           data: store.heapData
         },
       ]}
       width={500}
+      height={240}
     >
     </ApexChart>
   )
