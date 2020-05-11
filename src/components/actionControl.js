@@ -16,7 +16,7 @@ const ActionControl = () => {
   const classes = useStyles()
 
   const attachDebugger = async (tabs) => {
-    await chrome.runtime.sendMessage({ action: 'attach_debugger', payload: { tabId: tabs[0].id } })
+    await chrome.runtime.sendMessage({ action: 'attach_debugger', payload: tabs[0] })
     dispatch({ type: actions.START })
   }
 
