@@ -19,7 +19,8 @@ function App() {
   const commandReceiver = (action, payload) => {
     switch(action) {
       case commands.updateHeap:
-        let { usedHeap, totalHeap, heapData } = payload
+        let { usedHeap, totalHeap, heapData, page } = payload
+        dispatch({ type: actions.CHANGE_PAGE, payload: { page } })
         return dispatch({ type: actions.UPDATE_HEAP, payload: { usedHeap, totalHeap, heapData } })
       default:
         return

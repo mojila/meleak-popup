@@ -20,6 +20,11 @@ const Reducer = (state = stores, action) => {
         totalHeap: action.payload.totalHeap,
         heapData: action.payload.heapData
       }
+    case actions.CHANGE_PAGE:
+      return {
+        ...state,
+        page: action.payload.page
+      }
     default:
       return state
   }
