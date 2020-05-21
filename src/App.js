@@ -1,6 +1,6 @@
 /*eslint-disable no-undef*/
 import React, { useEffect, useContext } from 'react';
-import { Grid } from '@material-ui/core'
+import { Grid, Button } from '@material-ui/core'
 import ActionControl from './components/actionControl';
 import CurrentHeapUsed from './components/currentHeapUsed';
 import CurrentHeapTotal from './components/currentHeapTotal';
@@ -8,6 +8,7 @@ import Context from './context';
 import actions from './actions';
 import Chart from './components/chart';
 import Title from './components/title';
+import TrackChangesIcon from '@material-ui/icons/TrackChanges';
 
 const commands = {
   updateHeap: 'update_heap'
@@ -24,6 +25,17 @@ function App() {
         return dispatch({ type: actions.UPDATE_HEAP, payload: { usedHeap, totalHeap, heapData } })
       default:
         return
+    }
+  }
+
+  const toDashboard = () => {
+    if (process.env.NODE_ENV === 'production') {
+      let url = chrome.runtime.getURL('option/index.html')
+
+      let link = document.createElement("a");
+      link.target = "_blank";
+      link.href = `${url}`;
+      return link.click();
     }
   }
 
@@ -52,6 +64,17 @@ function App() {
       </Grid>
       <Grid item xs={12}>
         <Chart />
+      </Grid>
+      <Grid item xs={12}>
+        <Button
+          variant="contained"
+          startIcon={<TrackChangesIcon />}
+          color="secondary"
+          fullWidth
+          onClick={() => toDashboard()}
+        >
+          Memory Leak Detected in this Page (0)
+        </Button>
       </Grid>
     </Grid>
   );  
