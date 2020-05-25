@@ -1,14 +1,14 @@
 /*eslint-disable no-undef*/
 import React, { useEffect, useContext } from 'react';
-import { Grid, Button } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import ActionControl from './components/actionControl';
 import CurrentHeapUsed from './components/currentHeapUsed';
 import CurrentHeapTotal from './components/currentHeapTotal';
+import MemoryLeakCount from './components/memoryLeakCount';
 import Context from './context';
 import actions from './actions';
 import Chart from './components/chart';
 import Title from './components/title';
-import TrackChangesIcon from '@material-ui/icons/TrackChanges';
 
 const commands = {
   updateHeap: 'update_heap'
@@ -20,22 +20,12 @@ function App() {
   const commandReceiver = (action, payload) => {
     switch(action) {
       case commands.updateHeap:
-        let { usedHeap, totalHeap, heapData, page } = payload
+        let { usedHeap, totalHeap, heapData, page, memoryLeak } = payload
         dispatch({ type: actions.CHANGE_PAGE, payload: { page } })
+        dispatch({ type: actions.UPDATE_COUNT, payload: { memoryLeak } })
         return dispatch({ type: actions.UPDATE_HEAP, payload: { usedHeap, totalHeap, heapData } })
       default:
         return
-    }
-  }
-
-  const toDashboard = () => {
-    if (process.env.NODE_ENV === 'production') {
-      let url = chrome.runtime.getURL('option/index.html')
-
-      let link = document.createElement("a");
-      link.target = "_blank";
-      link.href = `${url}`;
-      return link.click();
     }
   }
 
@@ -66,15 +56,7 @@ function App() {
         <Chart />
       </Grid>
       <Grid item xs={12}>
-        <Button
-          variant="contained"
-          startIcon={<TrackChangesIcon />}
-          color="secondary"
-          fullWidth
-          onClick={() => toDashboard()}
-        >
-          Memory Leak Detected in this Page (0)
-        </Button>
+        <MemoryLeakCount />
       </Grid>
     </Grid>
   );  

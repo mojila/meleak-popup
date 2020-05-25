@@ -1,5 +1,6 @@
 const page = {
-  page: '/'
+  page: '/',
+  memoryLeak: 0
 }
 
 export default page

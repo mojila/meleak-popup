@@ -25,6 +25,11 @@ const Reducer = (state = stores, action) => {
         ...state,
         page: action.payload.page
       }
+    case actions.UPDATE_COUNT:
+      return {
+        ...state,
+        memoryLeak: action.payload.memoryLeak
+      }
     default:
       return state
   }
