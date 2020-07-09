@@ -7,6 +7,9 @@ import actions from '../actions'
 const useStyles = makeStyles((_theme) => ({
   paper: {
     padding: 8
+  },
+  clearButton: {
+    marginRight: '4px'
   }
 }))
 
@@ -25,12 +28,20 @@ const ActionControl = () => {
     dispatch({ type: actions.STOP })
   }
 
+  const clearData = async (tabs) => {
+    await chrome.runtime.sendMessage({ action: 'clear_data', payload: tabs[0] })
+  }
+
   const stop = async () => {
     await chrome.tabs.query({ active: true }, detachDebugger)
   }
 
   const start = async () => {
     await chrome.tabs.query({ active: true }, attachDebugger)
+  }
+
+  const clear = async () => {
+    await chrome.tabs.query({ active: true }, clearData)
   }
 
   const checkActivation = async () => {
@@ -61,6 +72,7 @@ const ActionControl = () => {
         </Grid>
         <Grid item xs={6}>
           <Box display="flex" justifyContent="flex-end">
+          <Button className={classes.clearButton} size="small" variant="outlined" onClick={clear}>Clear</Button>
             {
               store.active
                 ? <Button size="small" variant="outlined" onClick={stop}>Stop</Button>
